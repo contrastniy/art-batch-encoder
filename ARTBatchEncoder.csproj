@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A2B75A18-14C7-4EC8-8D73-63D98195D755}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>ArtBatchEncoder</RootNamespace>
+    <AssemblyName>ARTBatchEncoder</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <ApplicationIcon>art_batch_encoder.ico</ApplicationIcon>
+    <StartupObject>ArtBatchEncoder.Program</StartupObject>
+    <AppConfig>ARTBatchEncoder.exe.config</AppConfig>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="src\AssemblyInfo.cs" />
+    <Compile Include="src\BatchManifestReader.cs" />
+    <Compile Include="src\CodecCatalog.cs" />
+    <Compile Include="src\CodecProfile.cs" />
+    <Compile Include="src\ExrCompressionProfile.cs" />
+    <Compile Include="src\GpuSupport.cs" />
+    <Compile Include="src\MainForm.cs" />
+    <Compile Include="src\MainForm.Encoding.cs" />
+    <Compile Include="src\MainForm.ExrEncoding.cs" />
+    <Compile Include="src\MainForm.Layout.cs" />
+    <Compile Include="src\MainForm.Lifecycle.cs" />
+    <Compile Include="src\MainForm.SequenceList.cs" />
+    <Compile Include="src\MainForm.Source.cs" />
+    <Compile Include="src\ManifestReader.cs" />
+    <Compile Include="src\Models.cs" />
+    <Compile Include="src\OpenExrJob.cs" />
+    <Compile Include="src\OpenImageIoSupport.cs" />
+    <Compile Include="src\OutputMode.cs" />
+    <Compile Include="src\Program.cs" />
+    <Compile Include="src\SettingsStore.cs" />
+    <Compile Include="src\ThemeControls.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="README.md" />
+    <None Include="THIRD_PARTY.md" />
+    <None Include="package.ps1" />
+    <None Include="docs\art_batch_encoder.png" />
+    <None Include="ARTBatchEncoder.exe.config" />
+    <None Include="artbe_settings.ini">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ffmpeg\README.txt">
+      <Link>ffmpeg\README.txt</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="openimageio\README.txt">
+      <Link>openimageio\README.txt</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+
+  <Target Name="PackageRelease" AfterTargets="Build"
+          Condition=" '$(Configuration)' == 'Release' and '$(SkipReleasePackaging)' != 'true' ">
+    <Exec Command="&quot;%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe&quot; -NoProfile -ExecutionPolicy Bypass -File &quot;$(ProjectDir)package.ps1&quot; -Version &quot;1.0&quot;" />
+  </Target>
+</Project>

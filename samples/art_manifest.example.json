@@ -1,0 +1,23 @@
+{
+  "schema": "css-v34-art.take",
+  "take": {
+    "name": "take_001",
+    "absolute_folder": "C:\\ART\\recordings\\take_001"
+  },
+  "capture": {
+    "frame_rate": 60,
+    "frame_count": 900
+  },
+  "passes": [
+    {
+      "name": "clear",
+      "directory": "clear",
+      "filename_pattern": "clear_%06d.tga"
+    },
+    {
+      "name": "depth",
+      "directory": "depth",
+      "filename_pattern": "depth_%06d.tga"
+    }
+  ]
+}
